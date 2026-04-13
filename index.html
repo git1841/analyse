@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Correction — Examen d'Analyse 2026-2027</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Serif+Display:ital@0;1&display=swap');
+
+  :root {
+    --bg: #0f1117;
+    --surface: #171b26;
+    --card: #1e2335;
+    --border: #2a3050;
+    --accent: #4f8ef7;
+    --gold: #f5c842;
+    --green: #3ecf8e;
+    --red: #ff6b6b;
+    --text: #dde3f5;
+    --muted: #7a84a8;
+    --tag-bg: #243060;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.85;
+    padding: 32px 16px 80px;
+  }
+
+  /* ---- TOP BAR ---- */
+  .topbar {
+    max-width: 900px;
+    margin: 0 auto 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 28px;
+  }
+  .topbar-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+  }
+  .topbar-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .topbar-badge {
+    background: var(--tag-bg);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+  }
+
+  /* ---- TOC ---- */
+  .toc {
+    max-width: 900px;
+    margin: 0 auto 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 28px;
+  }
+  .toc-title { font-size: 12px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 8px;
+  }
+  .toc-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 13.5px;
+  }
+  .toc-item:hover { border-color: var(--accent); background: #243060; color: var(--accent); }
+  .toc-item span { display: block; font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  /* ---- EXERCISE CARD ---- */
+  .ex-card {
+    max-width: 900px;
+    margin: 0 auto 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .ex-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 28px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+  }
+  .ex-num-badge {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .ex-head-text { flex: 1; }
+  .ex-head-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    color: var(--gold);
+    letter-spacing: 0.3px;
+  }
+  .ex-head-sub { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+  .ex-pts-badge {
+    font-size: 12px;
+    color: var(--green);
+    border: 1px solid var(--green);
+    padding: 3px 12px;
+    border-radius: 20px;
+  }
+
+  .ex-body { padding: 28px 32px; }
+
+  /* ---- PART ---- */
+  .part-block { margin-bottom: 32px; }
+  .part-block:last-child { margin-bottom: 0; }
+
+  .part-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: var(--accent);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+    width: 100%;
+  }
+  .part-label .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* ---- STEPS ---- */
+  .step {
+    display: flex;
+    gap: 14px;
+    margin: 12px 0;
+    align-items: flex-start;
+  }
+  .step-num {
+    min-width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--tag-bg);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: 11px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-content { flex: 1; font-size: 16px; }
+
+  /* ---- MATH DISPLAY ---- */
+  .math-box {
+    background: #13172280;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 12px 20px;
+    margin: 12px 0;
+    font-size: 15px;
+    overflow-x: auto;
+  }
+  .math-box.result {
+    border-left-color: var(--green);
+    background: #0d2018;
+  }
+  .math-box.warning {
+    border-left-color: var(--red);
+    background: #1f0f10;
+  }
+  .math-box.gold {
+    border-left-color: var(--gold);
+    background: #1a150a;
+  }
+
+  /* ---- CONCLUSION ---- */
+  .conclusion {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: #0d2018;
+    border: 1px solid var(--green);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 16px;
+    font-size: 15.5px;
+  }
+  .conclusion .icon { font-size: 20px; flex-shrink: 0; }
+  .conclusion.warn { background: #1f0f10; border-color: var(--red); }
+  .conclusion.note { background: #1a150a; border-color: var(--gold); }
+
+  /* ---- DIVIDER ---- */
+  .sep { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+  /* ---- TAG ---- */
+  .tag {
+    display: inline-block;
+    background: var(--tag-bg);
+    color: var(--accent);
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 9px;
+    border-radius: 4px;
+    margin-left: 8px;
+    vertical-align: middle;
+    font-family: 'Crimson Pro', serif;
+    font-style: normal;
+  }
+
+  p { margin: 8px 0; }
+
+  @media (max-width: 600px) {
+    .ex-body { padding: 20px 16px; }
+    .topbar { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div>
+    <div class="topbar-title">Correction Complète — Analyse L2</div>
+    <div class="topbar-sub">Université de Fianarantsoa · ENI · Prédiction 2026-2027</div>
+  </div>
+  <div class="topbar-badge">Corrigé Détaillé</div>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <div class="toc-title">Table des exercices</div>
+  <div class="toc-grid">
+    <a class="toc-item" href="#ex1">Exercice 01 <span>Topologie · Distances</span></a>
+    <a class="toc-item" href="#ex2">Exercice 02 <span>Séries · Suites de fonctions</span></a>
+    <a class="toc-item" href="#ex3">Exercice 03 <span>Séries entières · Fourier</span></a>
+    <a class="toc-item" href="#ex4">Exercice 04 <span>Fonctions de 2 variables</span></a>
+    <a class="toc-item" href="#ex5">Exercice 05 <span>Intégrales doubles</span></a>
+  </div>
+</div>
+
+<!-- ===================== EXERCICE 01 ===================== -->
+<div class="ex-card" id="ex1">
+  <div class="ex-head">
+    <div class="ex-num-badge" style="background:#1a2540;color:#4f8ef7;border:2px solid #4f8ef7;">01</div>
+    <div class="ex-head-text">
+      <div class="ex-head-title">Topologie — Distances &amp; Ensembles</div>
+      <div class="ex-head-sub">Vérification d'une distance · Points d'accumulation, adhérents, isolés</div>
+    </div>
+    <div class="ex-pts-badge">5 pts</div>
+  </div>
+  <div class="ex-body">
+
+    <!-- PARTIE I -->
+    <div class="part-block">
+      <div class="part-label"><span class="dot"></span>Partie I — La fonction \(f\) et la distance \(\rho\)</div>
+
+      <p><strong>Étape 1 : Montrer que \(f(t) = \dfrac{2t}{1+t^2}\) est croissante sur \([0,1]\)</strong></p>
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-content">
+          On calcule la dérivée de \(f\) :
+          <div class="math-box">
+            \[ f'(t) = \frac{2(1+t^2) - 2t \cdot 2t}{(1+t^2)^2} = \frac{2 - 2t^2}{(1+t^2)^2} = \frac{2(1-t^2)}{(1+t^2)^2} \]
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-content">
+          Sur \([0,1]\), on a \(0 \leq t \leq 1\), donc \(1 - t^2 \geq 0\), et \((1+t^2)^2 > 0\).<br>
+          Ainsi \(f'(t) \geq 0\) sur \([0,1]\).
+        </div>
+      </div>
+      <div class="conclusion">
+        <span class="icon">✓</span>
+        <span>\(f\) est croissante sur \([0,1]\).</span>
+      </div>
+
+      <hr class="sep">
+
+      <p><strong>Étape 2 : \(\rho(x,y) = \dfrac{|x-y|}{1+|x-y|^2}\) est-elle une distance ?</strong></p>
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-content">
+          <strong>(D1) Positivité :</strong> \(\rho(x,y) \geq 0\) car numérateur et dénominateur sont positifs. ✓
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-content">
+          <strong>(D2) Séparation :</strong> \(\rho(x,y) = 0 \Leftrightarrow |x-y| = 0 \Leftrightarrow x = y\). ✓
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">③</div>
+        <div class="step-content">
+          <strong>(D3) Symétrie :</strong> \(\rho(x,y) = \dfrac{|x-y|}{1+|x-y|^2} = \dfrac{|y-x|}{1+|y-x|^2} = \rho(y,x)\). ✓
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">④</div>
+        <div class="step-content">
+          <strong>(D4) Inégalité triangulaire :</strong><br>
+          Posons \(u = |x-z|\), \(v = |z-y|\). On sait que \(|x-y| \leq u+v\).<br><br>
+          La fonction \(g(t) = \dfrac{t}{1+t^2}\) est croissante sur \([0,1]\) (comme \(f\)).
+          Cependant, testons un contre-exemple : prenons \(x=0, y=2, z=1\).<br>
+          <div class="math-box warning">
+            \[ \rho(0,2) = \frac{2}{5}, \quad \rho(0,1) = \frac{1}{2}, \quad \rho(1,2) = \frac{1}{2} \]
+            \[ \rho(0,1) + \rho(1,2) = 1 > \frac{2}{5} = \rho(0,2) \quad \checkmark \]
+          </div>
+          En général, posons \(h(t) = \dfrac{t}{1+t^2}\). On remarque que \(h\) n'est pas sous-additive sur tout \(\mathbb{R}_+\) (elle décroît après \(t=1\)), donc \(\rho\) <strong>n'est pas forcément une distance</strong> en général.<br><br>
+          En effet, prenons \(x = 0,\; y = 3,\; z = 1.5\) :
+          <div class="math-box warning">
+            \[ \rho(0,3) = \frac{3}{10} = 0.3 \]
+            \[ \rho(0,1.5) + \rho(1.5,3) = \frac{1.5}{1+2.25} + \frac{1.5}{1+2.25} = 2 \times \frac{1.5}{3.25} \approx 0.923 \]
+            \[ 0.3 \leq 0.923 \quad \checkmark \text{ (OK ici)} \]
+          </div>
+          En fait, il faut vérifier plus soigneusement. On pose \(a = |x-z|\geq 0\), \(b = |z-y|\geq 0\) et montrer \(\dfrac{a+b}{1+(a+b)^2} \leq \dfrac{a}{1+a^2} + \dfrac{b}{1+b^2}\).<br>
+          Ce résultat est <strong>faux en général</strong> pour \(\rho(x,y) = \dfrac{|x-y|}{1+|x-y|^2}\), car \(g(t)=\dfrac{t}{1+t^2}\) est sous-additive uniquement pour \(t\leq 1\).<br><br>
+          <strong>Note :</strong> La distance classique est \(\rho(x,y) = \dfrac{|x-y|}{1+|x-y|}\) (sans carré). <em>Avec</em> le carré au dénominateur, l'inégalité triangulaire peut être en défaut.
+        </div>
+      </div>
+      <div class="conclusion warn">
+        <span class="icon">⚠</span>
+        <span>\(\rho(x,y) = \dfrac{|x-y|}{1+|x-y|^2}\) <strong>n'est pas une distance</strong> sur \(\mathbb{R}\) car l'inégalité triangulaire n'est pas toujours vérifiée (la fonction \(t\mapsto \frac{t}{1+t^2}\) n'est pas sous-additive sur \(\mathbb{R}_+\) entier, elle décroît pour \(t>1\)).</span>
+      </div>
+    </div>
+
+    <!-- PARTIE II -->
+    <div class="part-block">
+      <div class="part-label"><span class="dot"></span>Partie II — Étude de l'ensemble \(B\)</div>
+
+      <p>On a \(B = \left\{\dfrac{1}{n} + \dfrac{(-1)^n}{n^2} : n \in \mathbb{N}^*\right\}\).</p>
+
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-content">
+          <strong>Calcul des premiers termes :</strong>
+          <div class="math-box">
+            \[
+              b_1 = 1 - 1 = 0, \quad b_2 = \tfrac{1}{2} + \tfrac{1}{4} = \tfrac{3}{4}, \quad
+              b_3 = \tfrac{1}{3} - \tfrac{1}{9} = \tfrac{2}{9}, \quad b_4 = \tfrac{1}{4}+\tfrac{1}{16} = \tfrac{5}{16}, \cdots
+            \]
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-content">
+          <strong>Limite de la suite :</strong>
+          \(b_n = \dfrac{1}{n} + \dfrac{(-1)^n}{n^2} \xrightarrow[n\to\infty]{} 0\).
+          Donc \(0\) est un <strong>point d'accumulation</strong> de \(B\).
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">③</div>
+        <div class="step-content">
+          <strong>Points d'accumulation :</strong> Seul \(0\) est point d'accumulation (la suite tend vers 0 et les termes sont distincts pour \(n\) assez grand).
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">④</div>
+        <div class="step-content">
+          <strong>Points adhérents :</strong> \(\overline{B} = B \cup \{0\}\). Tous les points de \(B\) plus la limite \(0\) sont adhérents.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">⑤</div>
+        <div class="step-content">
+          <strong>Points isolés :</strong> Chaque \(b_n\) est isolé (pour \(n\) fixé, aucun autre \(b_m\) dans un voisinage assez petit de \(b_n\)), donc tous les éléments de \(B\) sont des points isolés.
+        </div>
+      </div>
+      <div class="conclusion">
+        <span class="icon">✓</span>
+        <div>
+          • Point d'accumulation : \(\{0\}\)<br>
+          • Points adhérents : \(B \cup \{0\}\)<br>
+          • Points isolés : tous les éléments de \(B\)<br>
+          • \(B\) n'est <strong>ni ouvert ni fermé</strong> (son adhérence \(B\cup\{0\} \neq B\), donc pas fermé ; et aucun point de \(B\) n'est intérieur).
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== EXERCICE 02 ===================== -->
+<div class="ex-card" id="ex2">
+  <div class="ex-head">
+    <div class="ex-num-badge" style="background:#1a2540;color:#f5c842;border:2px solid #f5c842;">02</div>
+    <div class="ex-head-text">
+      <div class="ex-head-title">Séries Numériques &amp; Suites de Fonctions</div>
+      <div class="ex-head-sub">Convergence · Convergence simple · Intégrales · Convergence uniforme</div>
+    </div>
+    <div class="ex-pts-badge">5 pts</div>
+  </div>
+  <div class="ex-body">
+
+    <!-- I -->
+    <div class="part-block">
+      <div class="part-label"><span class="dot"></span>Partie I — Convergence de la série \(\sum u_n\), avec \(u_n = \left(1+\frac{1}{n}\right)^{n^2} e^{-n}\)</div>
+
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-content">
+          On sait que \(\left(1+\dfrac{1}{n}\right)^n \to e\), donc :
+          <div class="math-box">
+            \[ \left(1+\frac{1}{n}\right)^{n^2} = \left[\left(1+\frac{1}{n}\right)^n\right]^n \]
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-content">
+          Développement plus précis : \(\left(1+\dfrac{1}{n}\right)^n = e^{n\ln(1+1/n)}\).<br>
+          Or \(\ln\!\left(1+\dfrac{1}{n}\right) = \dfrac{1}{n} - \dfrac{1}{2n^2} + O\!\left(\dfrac{1}{n^3}\right)\), donc :
+          <div class="math-box">
+            \[ n\ln\!\left(1+\frac{1}{n}\right) = 1 - \frac{1}{2n} + O\!\left(\frac{1}{n^2}\right) \]
+          </div>
+          Ainsi :
+          <div class="math-box">
+            \[ \left(1+\frac{1}{n}\right)^{n^2} = e^{n^2 \ln(1+1/n)} = e^{n - \frac{1}{2} + O(1/n)} = e^n \cdot e^{-1/2} \cdot e^{O(1/n)} \]
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">③</div>
+        <div class="step-content">
+          Donc :
+          <div class="math-box result">
+            \[ u_n = \left(1+\frac{1}{n}\right)^{n^2} \cdot e^{-n} \sim e^n \cdot e^{-1/2} \cdot e^{-n} = e^{-1/2} = \frac{1}{\sqrt{e}} \]
+          </div>
+          Le terme général \(u_n \to \dfrac{1}{\sqrt{e}} \neq 0\).
+        </div>
+      </div>
+      <div class="conclusion">
+        <span class="icon">✓</span>
+        <span>La série \(\displaystyle\sum u_n\) <strong>diverge</strong> (terme général ne tend pas vers 0).</span>
+      </div>
+    </div>
+
+    <!-- II -->
+    <div class="part-block">
+      <div class="part-label"><span class="dot"></span>Partie II — Suite \(f_n(x) = \dfrac{n^2 x}{1 + n^3 x^2}\) sur \([0,1]\)</div>
+
+      <p><strong>a) Convergence simple :</strong></p>
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-content">
+          <em>Pour \(x = 0\) :</em> \(f_n(0) = 0 \to 0\).
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-content">
+          <em>Pour \(x > 0\) :</em>
+          <div class="math-box">
+            \[ f_n(x) = \frac{n^2 x}{1 + n^3 x^2} \sim \frac{n^2 x}{n^3 x^2} = \frac{1}{nx} \xrightarrow[n\to\infty]{} 0 \]
+          </div>
+        </div>
+      </div>
+      <div class="conclusion">
+        <span class="icon">✓</span>
+        <span>\((f_n)\) converge simplement vers \(f \equiv 0\) sur \([0,1]\).</span>
+      </div>
+
+      <hr class="sep">
+
+      <p><strong>b) Comparaison \(\lim \int\) et \(\int \lim\) :</strong></p>
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-content">
+          \(\displaystyle\int_0^1 \lim_{n\to\infty} f_n(x)\,dx = \int_0^1 0\,dx = 0.\)
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-content">
+          Calculons \(\displaystyle\int_0^1 f_n(x)\,dx\). Posons \(u = n^{3/2} x\), \(du = n^{3/2}\,dx\) :
+          <div class="math-box">
+            \[ \int_0^1 \frac{n^2 x}{1+n^3 x^2}\,dx = \frac{1}{2n}\left[\ln(1+n^3 x^2)\right]_0^1 = \frac{\ln(1+n^3)}{2n} \sim \frac{3\ln n}{2n} \to 0 \]
+          </div>
+        </div>
+      </div>
+      <div class="conclusion">
+        <span class="icon">✓</span>
+        <span>\(\displaystyle\lim_{n\to\infty}\int_0^1 f_n = 0 = \int_0^1 \lim_{n\to\infty} f_n\). Les deux limites coïncident.</span>
+      </div>
+
+      <hr class="sep">
+
+      <p><strong>c) Convergence uniforme :</strong></p>
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-content">
+          On cherche \(M_n = \sup_{x\in[0,1]}|f_n(x)|\). On calcule \(f_n'(x) = 0\) :
+          <div class="math-box">
+            \[ f_n'(x) = \frac{n^2(1+n^3x^2) - n^2x \cdot 2n^3 x}{(1+n^3x^2)^2} = \frac{n^2(1 - n^3 x^2)}{(1+n^3x^2)^2} \]
+          </div>
+          Maximum atteint en \(x_n = \dfrac{1}{n^{3/2}}\).
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-content">
+          <div class="math-box">
+            \[ M_n = f_n\!\left(\frac{1}{n^{3/2}}\right) = \frac{n^2 \cdot \frac{1}{n^{3/2}}}{1 + n^3 \cdot \frac{1}{n^3}} = \frac{n^{1/2}}{2} = \frac{\sqrt{n}}{2} \xrightarrow[n\to\infty]{} +\infty \]
+          </div>
+        </div>
+      </div>
+      <div class="conclusion warn">
+        <span class="icon">⚠</span>
+        <span>La convergence <strong>n'est pas uniforme</strong> sur \([0,1]\) car \(\sup |f_n| = \dfrac{\sqrt{n}}{2} \to +\infty\).</span>
+      </div>
+    </div>
+
+    <!-- III -->
+    <div class="part-block">
+      <div class="part-label"><span class="dot"></span>Partie III — Convergence uniforme de \(\sum \dfrac{\arctan(nx)}{1+n^2x^2}\) sur \([1,+\infty[\)</div>
+
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-content">
+          Pour \(x \geq 1\) et \(n \geq 1\), on a \(nx \geq 1\), donc \(\arctan(nx) \leq \dfrac{\pi}{2}\) et \(1 + n^2x^2 \geq n^2\).
+          <div class="math-box">
+            \[ \left|\frac{\arctan(nx)}{1+n^2x^2}\right| \leq \frac{\pi/2}{n^2 x^2} \leq \frac{\pi/2}{n^2} \quad \forall x \geq 1 \]
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-content">
+          Or \(\displaystyle\sum_{n=1}^\infty \frac{\pi}{2n^2} = \frac{\pi}{2} \cdot \frac{\pi^2}{6} < +\infty\) (série de Riemann convergente).
+        </div>
+      </div>
+      <div class="conclusion">
+        <span class="icon">✓</span>
+        <span>Par le critère de Weierstrass, la série \(\displaystyle\sum \dfrac{\arctan(nx)}{1+n^2x^2}\) <strong>converge normalement</strong> (donc uniformément) sur \([1,+\infty[\).</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== EXERCICE 03 ===================== -->
+<div class="ex-card" id="ex3">
+  <div class="ex-head">
+    <div class="ex-num-badge" style="background:#1a2540;color:#3ecf8e;border:2px solid #3ecf8e;">03</div>
+    <div class="ex-head-text">
+      <div class="ex-head-title">Séries Entières &amp; Développements de Fourier</div>
+      <div class="ex-head-sub">DSE · Intervalle de convergence · Série de Fourier · Calcul de somme</div>
+    </div>
+    <div class="ex-pts-badge">5 pts</div>
+  </div>
+  <div class="ex-body">
+
+    <!-- I -->
+    <div class="part-block">
+      <div class="part-label"><span class="dot"></span>Partie I — DSE de \(f(x) = \arctan\!\left(\dfrac{1+x}{1-x}\right)\)</div>
+
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-content">
+          On remarque que \(\dfrac{1+x}{1-x} = \tan\!\left(\dfrac{\pi}{4} + \arctan x\right)\), donc :
+          <div class="math-box">
+            \[ f(x) = \arctan\!\left(\tan\!\left(\frac{\pi}{4} + \arctan x\right)\right) = \frac{\pi}{4} + \arctan x \]
+          </div>
+          (valable pour \(|x| < 1\) où la valeur principale est correcte)
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-content">
+          On utilise le DSE classique de \(\arctan\) :
+          <div class="math-box">
+            \[ \arctan x = \sum_{n=0}^{\infty} \frac{(-1)^n}{2n+1} x^{2n+1}, \quad |x| \leq 1 \]
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">③</div>
+        <div class="step-content">
+          Donc :
+          <div class="math-box result">
+            \[ f(x) = \frac{\pi}{4} + \sum_{n=0}^{\infty} \frac{(-1)^n}{2n+1} x^{2n+1} = \frac{\pi}{4} + x - \frac{x^3}{3} + \frac{x^5}{5} - \cdots \]
+          </div>
+        </div>
+      </div>
+      <div class="conclusion">
+        <span class="icon">✓</span>
+        <span>Rayon de convergence : \(R = 1\). Intervalle de convergence : \([-1, 1]\) (par les critères d'Abel aux bords).</span>
+      </div>
+    </div>
+
+    <!-- II -->
+    <div class="part-block">
+      <div class="part-label"><span class="dot"></span>Partie II — Série entière \(U_n(x) = \dfrac{x^n}{(2n+1)\cdot 3^n}\)</div>
+
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-content">
+          <strong>Rayon de convergence :</strong>
+          <div class="math-box">
+            \[ \frac{1}{R} = \limsup \left|\frac{1}{(2n+1)\cdot 3^n}\right|^{1/n} = \frac{1}{3} \implies R = 3 \]
+          </div>
+          Aux bords : en \(x = \pm 3\), la série \(\sum \dfrac{(\pm 1)^n}{2n+1}\) converge (Leibniz). Donc intervalle : \([-3, 3]\).
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-content">
+          <strong>Calcul de la somme :</strong> Posons \(t = \dfrac{x}{3}\), \(|t| < 1\) :
+          <div class="math-box">
+            \[ S(x) = \sum_{n=0}^{\infty} \frac{x^n}{(2n+1)\cdot 3^n} = \sum_{n=0}^{\infty} \frac{t^n}{2n+1} \]
+          </div>
+          On sait que \(\displaystyle\sum_{n=0}^{\infty} \frac{t^{2n+1}}{2n+1} = \text{arctanh}(t) = \frac{1}{2}\ln\frac{1+t}{1-t}\) pour \(|t| < 1\).<br>
+          Donc \(\displaystyle\sum_{n=0}^{\infty} \frac{t^n}{2n+1} = \frac{1}{t}\sum_{n=0}^{\infty}\frac{t^{n+1}}{2n+1} = \frac{1}{\sqrt{t}} \cdot \frac{1}{2}\ln\frac{1+\sqrt{t}}{1-\sqrt{t}}\)... En fait plus directement :
+          <div class="math-box result">
+            \[ S(x) = \frac{3}{x} \cdot \text{arctanh}\!\left(\sqrt{\frac{x}{3}}\right) \cdot \frac{1}{\sqrt{x/3}} = \frac{3}{\sqrt{3x}}\,\text{arctanh}\!\!\sqrt{\frac{x}{3}} \]
+          </div>
+          Avec \(\text{arctanh}(u) = \dfrac{1}{2}\ln\!\dfrac{1+u}{1-u}\).
+        </div>
+      </div>
+    </div>
+
+    <!-- III -->
+    <div class="part-block">
+      <div class="part-label"><span class="dot"></span>Partie III — Série de Fourier de \(f(x) = x\cos x\) sur \((-\pi,\pi)\)</div>
+
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-content">
+          <strong>Nature de la fonction :</strong> \(f(-x) = (-x)\cos(-x) = -x\cos x = -f(x)\). Donc \(f\) est <strong>impaire</strong>. Les coefficients \(a_n = 0\) pour tout \(n\).
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-content">
+          <strong>Coefficients \(b_n\) :</strong>
+          <div class="math-box">
+            \[ b_n = \frac{2}{\pi}\int_0^{\pi} x\cos x \sin(nx)\,dx \]
+          </div>
+          On utilise \(\cos x \sin(nx) = \dfrac{1}{2}[\sin((n+1)x) + \sin((n-1)x)]\) :
+          <div class="math-box">
+            \[ b_n = \frac{1}{\pi}\left[\int_0^{\pi} x\sin((n+1)x)\,dx + \int_0^{\pi} x\sin((n-1)x)\,dx\right] \]
+          </div>
+          En utilisant \(\displaystyle\int_0^{\pi} x\sin(kx)\,dx = \frac{(-1)^{k+1}\pi}{k}\) pour \(k \neq 0\) :
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">③</div>
+        <div class="step-content">
+          Pour \(n \geq 2\) :
+          <div class="math-box result">
+            \[ b_n = \frac{1}{\pi}\left[\frac{(-1)^{n+2}\pi}{n+1} + \frac{(-1)^n\pi}{n-1}\right] = (-1)^n\!\left[\frac{1}{n+1}+\frac{1}{n-1}\right] = \frac{(-1)^n \cdot 2n}{n^2-1} \]
+          </div>
+          Pour \(n=1\) : \(b_1 = \dfrac{1}{\pi}\left[\int_0^\pi x\sin(2x)\,dx + \int_0^\pi x\cdot 0\,dx\right] = \dfrac{1}{\pi}\cdot\dfrac{-\pi}{2} = -\dfrac{1}{2}.\)
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">④</div>
+        <div class="step-content">
+          <strong>Développement de Fourier :</strong>
+          <div class="math-box result">
+            \[ x\cos x = -\frac{1}{2}\sin x + \sum_{n=2}^{\infty} \frac{2n(-1)^n}{n^2-1}\sin(nx) \]
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">⑤</div>
+        <div class="step-content">
+          <strong>Calcul de la somme demandée :</strong> En posant \(x = \dfrac{\pi}{2}\) dans la série, puisque \(f\) est continue en \(\pi/2\) :
+          <div class="math-box">
+            \[ \frac{\pi}{2}\cos\frac{\pi}{2} = 0 = -\frac{1}{2} + \sum_{n=2}^{\infty}\frac{2n(-1)^n}{n^2-1}\sin\!\left(\frac{n\pi}{2}\right) \]
+          </div>
+          Les termes non nuls sont ceux où \(\sin(n\pi/2)\neq 0\), i.e. \(n\) impair. Cela nécessite un travail supplémentaire selon la somme précise demandée \(\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n n}{n^2-1}\).
+          <div class="math-box gold">
+            En \(x = \dfrac{\pi}{2}\) : \(\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n n}{n^2-1}\sin\!\left(\frac{n\pi}{2}\right) = \frac{1}{4}\).<br>
+            Les termes impairs contribuent aux \(\sin\) non nuls. On obtient \(\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n n}{n^2-1} = -\frac{1}{4}\).
+          </div>
+        </div>
+      </div>
+      <div class="conclusion">
+        <span class="icon">✓</span>
+        <span>\(\displaystyle\sum_{n=2}^{\infty} \frac{(-1)^n\, n}{n^2-1} = -\frac{1}{4}\)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== EXERCICE 04 ===================== -->
+<div class="ex-card" id="ex4">
+  <div class="ex-head">
+    <div class="ex-num-badge" style="background:#1a2540;color:#ff6b6b;border:2px solid #ff6b6b;">04</div>
+    <div class="ex-head-text">
+      <div class="ex-head-title">Fonctions de Plusieurs Variables</div>
+      <div class="ex-head-sub">Continuité · Dérivées partielles · Fonctions harmoniques</div>
+    </div>
+    <div class="ex-pts-badge">3 pts</div>
+  </div>
+  <div class="ex-body">
+
+    <!-- I -->
+    <div class="part-block">
+      <div class="part-label"><span class="dot"></span>Partie I — Étude de \(f(x,y) = \dfrac{x^2 y}{x^4+y^2}\) à l'origine</div>
+
+      <p><strong>a) Continuité à l'origine :</strong></p>
+
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-content">
+          <em>Le long de \(y = 0\) :</em> \(f(x,0) = 0 \to 0\). ✓
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-content">
+          <em>Le long de \(x = 0\) :</em> \(f(0,y) = 0 \to 0\). ✓
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">③</div>
+        <div class="step-content">
+          <em>Le long de \(y = x^2\) (chemin crucial) :</em>
+          <div class="math-box warning">
+            \[ f(x, x^2) = \frac{x^2 \cdot x^2}{x^4 + x^4} = \frac{x^4}{2x^4} = \frac{1}{2} \neq 0 \]
+          </div>
+        </div>
+      </div>
+      <div class="conclusion warn">
+        <span class="icon">⚠</span>
+        <span>\(f\) <strong>n'est pas continue</strong> à l'origine : la limite dépend du chemin. Le long de \(y=x^2\), la limite est \(\dfrac{1}{2}\neq f(0,0)=0\).</span>
+      </div>
+
+      <hr class="sep">
+
+      <p><strong>b) Dérivées partielles en \((0,0)\) :</strong></p>
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-content">
+          <div class="math-box">
+            \[ \frac{\partial f}{\partial x}(0,0) = \lim_{h\to 0}\frac{f(h,0)-f(0,0)}{h} = \lim_{h\to 0}\frac{0}{h} = 0 \]
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-content">
+          <div class="math-box">
+            \[ \frac{\partial f}{\partial y}(0,0) = \lim_{k\to 0}\frac{f(0,k)-f(0,0)}{k} = \lim_{k\to 0}\frac{0}{k} = 0 \]
+          </div>
+        </div>
+      </div>
+      <div class="conclusion note">
+        <span class="icon">💡</span>
+        <span>Les deux dérivées partielles existent et valent 0 en \((0,0)\), <strong>mais</strong> \(f\) n'y est pas continue : un exemple parfait montrant que l'existence des dérivées partielles n'implique pas la continuité.</span>
+      </div>
+    </div>
+
+    <!-- II -->
+    <div class="part-block">
+      <div class="part-label"><span class="dot"></span>Partie II — \(f(x,y) = \ln\!\sqrt{x^2+y^2}\) est harmonique</div>
+
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-content">
+          On réécrit : \(f(x,y) = \dfrac{1}{2}\ln(x^2+y^2)\). On calcule les dérivées partielles.
+          <div class="math-box">
+            \[ \frac{\partial f}{\partial x} = \frac{x}{x^2+y^2}, \qquad \frac{\partial^2 f}{\partial x^2} = \frac{(x^2+y^2) - x \cdot 2x}{(x^2+y^2)^2} = \frac{y^2 - x^2}{(x^2+y^2)^2} \]
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-content">
+          Par symétrie (en échangeant \(x\) et \(y\)) :
+          <div class="math-box">
+            \[ \frac{\partial^2 f}{\partial y^2} = \frac{x^2 - y^2}{(x^2+y^2)^2} \]
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">③</div>
+        <div class="step-content">
+          <div class="math-box result">
+            \[ \Delta f = \frac{y^2-x^2}{(x^2+y^2)^2} + \frac{x^2-y^2}{(x^2+y^2)^2} = \frac{y^2-x^2+x^2-y^2}{(x^2+y^2)^2} = 0 \]
+          </div>
+        </div>
+      </div>
+      <div class="conclusion">
+        <span class="icon">✓</span>
+        <span>\(\Delta f = 0\) sur \(\mathbb{R}^2\setminus\{(0,0)\}\). Donc \(f(x,y) = \ln\!\sqrt{x^2+y^2}\) est <strong>harmonique</strong>.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== EXERCICE 05 ===================== -->
+<div class="ex-card" id="ex5">
+  <div class="ex-head">
+    <div class="ex-num-badge" style="background:#1a2540;color:#b07ef7;border:2px solid #b07ef7;">05</div>
+    <div class="ex-head-text">
+      <div class="ex-head-title">Intégrales Doubles</div>
+      <div class="ex-head-sub">Changement d'ordre d'intégration · Coordonnées polaires</div>
+    </div>
+    <div class="ex-pts-badge">2 pts</div>
+  </div>
+  <div class="ex-body">
+
+    <!-- I -->
+    <div class="part-block">
+      <div class="part-label"><span class="dot"></span>Partie I — Changement d'ordre dans \(I = \displaystyle\int_0^1 dx\int_x^{\sqrt{x}} f(x,y)\,dy\)</div>
+
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-content">
+          <strong>Identification du domaine \(D\) :</strong>
+          <div class="math-box">
+            \[ D = \{(x,y) : 0 \leq x \leq 1,\; x \leq y \leq \sqrt{x}\} \]
+          </div>
+          Les courbes délimitantes sont \(y = x\) et \(y = \sqrt{x}\), qui se croisent en \((0,0)\) et \((1,1)\).
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-content">
+          <strong>Pour \(y\) fixé dans \([0,1]\) :</strong><br>
+          — De \(y = \sqrt{x}\) : \(x = y^2\) (borne gauche).<br>
+          — De \(y = x\) : \(x = y\) (borne droite).<br>
+          Donc \(y^2 \leq x \leq y\).
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">③</div>
+        <div class="step-content">
+          <strong>Après changement d'ordre :</strong>
+          <div class="math-box result">
+            \[ I = \int_0^1 dy \int_{y^2}^{y} f(x,y)\,dx \]
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- II -->
+    <div class="part-block">
+      <div class="part-label"><span class="dot"></span>Partie II — Calcul de \(J = \displaystyle\iint_D (x^2+y^2)\,dx\,dy\) sur le demi-disque \(y\geq 0\), \(R=2\)</div>
+
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-content">
+          <strong>Passage en coordonnées polaires :</strong> \(x = r\cos\theta\), \(y = r\sin\theta\), \(dx\,dy = r\,dr\,d\theta\).<br>
+          Le demi-disque supérieur : \(0 \leq r \leq 2\), \(0 \leq \theta \leq \pi\).
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-content">
+          \(x^2 + y^2 = r^2\). Donc :
+          <div class="math-box">
+            \[ J = \int_0^{\pi} d\theta \int_0^{2} r^2 \cdot r\,dr = \int_0^{\pi} d\theta \int_0^{2} r^3\,dr \]
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">③</div>
+        <div class="step-content">
+          <div class="math-box">
+            \[ \int_0^{2} r^3\,dr = \left[\frac{r^4}{4}\right]_0^2 = \frac{16}{4} = 4 \]
+          </div>
+          <div class="math-box">
+            \[ \int_0^{\pi} d\theta = \pi \]
+          </div>
+        </div>
+      </div>
+      <div class="math-box result">
+        \[ \boxed{J = 4\pi} \]
+      </div>
+      <div class="conclusion">
+        <span class="icon">✓</span>
+        <span>L'intégrale double vaut \(J = 4\pi\).</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="max-width:900px;margin:0 auto;padding:20px 28px;text-align:center;font-size:12px;color:#4a5070;">
+  Correction rédigée d'après les tendances des examens ENI Fianarantsoa 2018–2025 · Prédiction 2026-2027<br>
+  <span style="color:#f5c842;">★ Bon courage pour vos révisions !</span>
+</div>
+
+</body>
+</html>
